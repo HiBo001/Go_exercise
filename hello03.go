@@ -188,7 +188,7 @@ func main() {
 	fmt.Println(compute(math.Pow))
 
 	pos, neg := adder(), adder()
-	for i:=0; i<10; i++ {
+	for i:=0; i<5; i++ {
 		fmt.Println(pos(i),neg(2*i+1))
 	}
 }
