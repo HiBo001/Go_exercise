@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"math"
 )
 
 type Vertex struct {
@@ -22,7 +23,17 @@ var (
 )
 
 func printSlice(s[]int){
-	fmt.Println("len=%d cap=%d %v ", len(s), cap(s), s)
+	fmt.Printf("len=%d cap=%d %v ", len(s), cap(s), s)
+}
+
+type Vertex3 struct {
+	Lat, Long float64
+}
+
+var m1 map[string]Vertex3
+
+func compute(fn func(float64, float64) float64) float64{
+	return fn(3, 4)
 }
 
 func main() {
@@ -117,4 +128,55 @@ func main() {
 	for i:=0; i<len(board); i++ {
 		fmt.Println(strings.Join(board[i], " "))
 	}
+
+	var s5 []int
+	printSlice(s5)
+
+	s5 = append(s5, 0)
+	printSlice(s5)
+
+	s5 = append(s5, 1)
+	printSlice(s5)
+
+	s5 = append(s5, 2, 3, 4)
+	printSlice(s5)
+
+	var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+	for i, v := range pow {
+		fmt.Printf("2**%d = %d \n", i, v)
+	}
+
+	m1 = make(map[string]Vertex3)
+	m1["Bell Labs"] = Vertex3{
+		40.32, 78.32,
+	}
+	fmt.Println(m1["Bell Labs"])
+
+	var m2 = map[string]Vertex3{
+		"Bell Labs": Vertex3{
+			49.1, 65.1,
+		},
+		"Google": Vertex3{
+			32.1, 32.1,
+		},
+	}
+	fmt.Println(m2)
+
+	m3 := make(map[string]int)
+	m3["answer"] = 42
+	fmt.Println(m3["answer"])
+
+	delete(m3, "answer")
+	fmt.Println(m3["answer"])
+
+	v1, ok := m3["answer"]
+	fmt.Println("The value:", v1, "Present?", ok)
+
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+	fmt.Println(compute(hypot))
+	fmt.Println(compute(math.Pow))
+
 }
