@@ -40,6 +40,18 @@ func Abs2 (v Vertex) float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
+type I interface {
+	M()
+}
+
+type T struct {
+	S string
+}
+
+func (t T) M() {
+	fmt.Println(t.S)
+}
+
 func main(){
 	v := Vertex{3, 4}
 	fmt.Println(v.Abs())
@@ -59,4 +71,8 @@ func main(){
 
 	var b = &v
 	fmt.Println(b.Abs())
+
+	var i T = T {"hello"}
+	i.M()
+
 }
