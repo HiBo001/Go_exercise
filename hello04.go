@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"time"
 )
 
 type Vertex struct {
@@ -61,6 +62,42 @@ func describe(i I){
 	fmt.Printf("(%v, %T) ", i, i)
 }
 
+func do(i interface{}){
+	switch v := i.(type) {
+	case int:
+		fmt.Printf("Twice %v is %v", v, v*2)
+	case string:
+		fmt.Printf("%q is %v bytes long \n", v, len(v))
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+}
+
+type Person struct {
+	Name string
+	Age int
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("%v (%v years)", p.Name, p.Age)
+}
+
+type MyError struct {
+	When time.Time
+	What string
+}
+
+func (e *MyError) Error() string {
+	return fmt.Sprintf("at %v, %s", e.When, e.What)
+}
+
+func run() error {
+	return &MyError{
+		time.Now(),
+		"it didn't work",
+	}
+}
+
 func main(){
 	v := Vertex{3, 4}
 	fmt.Println(v.Abs())
@@ -99,4 +136,28 @@ func main(){
 	var j I
 	describe(j)
 	//j.M()
+
+	fmt.Println("\n")
+
+	var i1 interface{} = "hello"
+	s := i1.(string)
+	fmt.Println(s)
+
+	s, ok := i1.(string)
+	fmt.Println(s, ok)
+
+	//f, ok1 := i1.(float64)
+	//fmt.Println(f, ok1)
+
+	do(21)
+	do("Hello")
+	do(true)
+
+	a1 := Person{"AAA", 12}
+	z1 := Person{"BBB", 13}
+	fmt.Println(a1, z1)
+
+	if err := run(); err != nil{
+		fmt.Println(err)
+	}
 }
