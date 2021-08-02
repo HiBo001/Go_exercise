@@ -23,6 +23,7 @@ func (v *Vertex) Scale(f float64){
 }
 
 type MyFloat float64
+type F float64
 
 func (f MyFloat) Abs() float64 {
 	if f < 0 {
@@ -48,8 +49,16 @@ type T struct {
 	S string
 }
 
-func (t T) M() {
+func (t *T) M() {
 	fmt.Println(t.S)
+}
+
+func (f F) M(){
+	fmt.Println(f)
+}
+
+func describe(i I){
+	fmt.Printf("(%v, %T) ", i, i)
 }
 
 func main(){
@@ -72,7 +81,22 @@ func main(){
 	var b = &v
 	fmt.Println(b.Abs())
 
-	var i T = T {"hello"}
-	i.M()
+	//var i T = T {"hello"}
+	//i.M()
+	////////////////////////////////////////////
 
+	fmt.Println("\n")
+
+	var i I
+	i = &T{"Hello"}
+	describe(i)
+	//i.M()
+
+	i = F(math.Pi)
+	describe(i)
+	//i.M()
+
+	var j I
+	describe(j)
+	//j.M()
 }
