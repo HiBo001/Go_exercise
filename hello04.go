@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math"
 	"time"
+	"strings"
+	"io"
 )
 
 type Vertex struct {
@@ -159,5 +161,18 @@ func main(){
 
 	if err := run(); err != nil{
 		fmt.Println(err)
+	}
+
+	fmt.Println("------------------\n")
+
+	r3 := strings.NewReader("Hello Reader!")
+	b3 := make([]byte, 4)
+	for {
+		n, err := r3.Read(b3)
+		fmt.Printf("n = %v err = %v b = %v \n", n, err, b3)
+		fmt.Printf("b[:] = %q \n", b3[:])
+		if err == io.EOF {
+			break
+		}
 	}
 }
