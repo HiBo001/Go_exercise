@@ -56,4 +56,14 @@ func main() {
 	for i := range c2 {
 		fmt.Println(i)
 	}
+
+	timeout := make (chan bool, 1)
+	ch := make(chan int)
+	select {
+		case <-ch:
+		case <-timeout:
+			fmt.Println("timeout!")
+		default:
+			fmt.Println("default case is running")
+	}
 }
